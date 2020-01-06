@@ -1,6 +1,5 @@
 import cv2
 import numpy as np
-import matplotlib.pyplot as plt
 from os import listdir
 from os.path import isfile, join
 
@@ -16,7 +15,7 @@ def verify(res, grand_t):
 
     k = 255
 
-    dice = np.sum(seg[gt==k])*2.0 / (np.sum(seg[seg==k]) + np.sum(gt[gt==k]))
+    dice = np.sum(seg[gt == k]) * 2.0 / (np.sum(seg[seg == k]) + np.sum(gt[gt == k]))
     # print('Dice similarity score is {}'.format(dice))
     return dice
 
@@ -24,13 +23,21 @@ def verify(res, grand_t):
 res_path = './output/'
 res_images = [f for f in listdir(res_path) if isfile(join(res_path, f))]
 
+seg_path = './output_seg/'
+seg_images = [f for f in listdir(seg_path) if isfile(join(seg_path, f))]
+
 label_path = './multi_label/'
 label_images = [f for f in listdir(label_path) if isfile(join(label_path, f))]
 
 dices = []
 
+# for i in range(0, 900):
+#     dices.append(verify(res_path + res_images[i], label_path + label_images[i]))
+#
+# print('mean dice similarity score {}'.format(np.mean(dices)))
+
 for i in range(0, 900):
-    dices.append(verify(res_path + res_images[i], label_path + label_images[i]))
+    dices.append(verify(seg_path + seg_images[i], label_path + label_images[i]))
 
 print('mean dice similarity score {}'.format(np.mean(dices)))
 
@@ -39,7 +46,3 @@ print('mean dice similarity score {}'.format(np.mean(dices)))
 #     print('mean per plant ' + plant.__str__() + ': {}'.format(np.mean(dices[60*(i-1):60*i-1])))
 #     plant += 1
 #     plant = plant % 5
-
-
-# 0 0.917151
-# 73 0.9175702797989728
