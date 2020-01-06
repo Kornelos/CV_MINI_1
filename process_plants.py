@@ -88,11 +88,12 @@ def process_img(f_dir, filename):
     cv2.imwrite(join('./output_seg/', filename), img)
 
 
-file_path = './multi_plant/'
-images = [f for f in listdir(file_path) if isfile(join(file_path, f))]
-if not DEBUG:
-    for im in images:
-        process_img(file_path, im)
+if __name__ == '__main__':
+    file_path = './multi_plant/'
+    images = [f for f in listdir(file_path) if isfile(join(file_path, f))]
+    if not DEBUG:
+        for im in images:
+            process_img(file_path, im)
 
-if DEBUG:
-    process_img(file_path, images[357])
+    if DEBUG:
+        process_img(file_path, images[357])
